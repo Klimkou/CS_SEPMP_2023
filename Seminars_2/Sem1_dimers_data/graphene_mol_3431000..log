@@ -1,0 +1,88 @@
+LAMMPS (5 Jun 2019)
+units           real
+atom_style      charge
+boundary	p p p
+read_data	3431000.data
+  orthogonal box = (-12 -12 -12) to (84 84 84)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  72 atoms
+  read_data CPU = 0.00624116 secs
+
+pair_style      reax/c NULL safezone 2 mincap 100
+pair_coeff      * * /home/common/orekhov.nd/_gulnaz/test/ffield_reax2.cho2016 C H
+fix             1 all qeq/reax 1 0.0 10.0 1.0e-6 reax/c
+
+group		list id <= 36
+36 atoms in group list
+
+delete_atoms	group list
+Deleted 36 atoms, new total = 36
+
+compute		kern all ke
+compute		pern all pe
+
+thermo_style    custom atoms step temp pe ke press vol density etotal c_pern c_kern
+thermo          100
+thermo_modify   flush yes
+
+timestep        0.1
+
+comm_style      brick
+fix             4 all balance 1000 1.05 shift xyz 5 1.05
+
+dump            1 all cfg 1000 coronene.*.cfg mass type xs ys zs
+dump_modify     1 element C H
+
+fix		10 all nve
+
+run		0
+Neighbor list info ...
+  update every 1 steps, delay 10 steps, check yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 16 16 16
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reax/c, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: half/ghost/bin/3d/newtoff
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off, ghost
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 3.456 | 3.456 | 3.456 Mbytes
+Atoms Step Temp PotEng KinEng Press Volume Density TotEng c_pern c_kern 
+      36        0            0    -4470.352            0   -22.779701       884736 0.00056355801    -4470.352    -4470.352            0 
+Loop time of 1.17812e-06 on 1 procs for 0 steps with 36 atoms
+
+84.9% CPU use with 1 MPI tasks x no OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0          | 0          | 0          |   0.0 |  0.00
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 1.178e-06  |            |       |100.00
+
+Nlocal:    36 ave 36 max 36 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:    5 ave 5 max 5 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:    630 ave 630 max 630 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 630
+Ave neighs/atom = 17.5
+Neighbor list builds = 0
+Dangerous builds = 0
+
+Please see the log.cite file for references relevant to this simulation
+
+Total wall time: 0:00:05
