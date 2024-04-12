@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ data.pagetitle }}</title>
+</head>
+<body>
+<h1>{{ data.header }}</h1>
+<p style="font-size:20px;">This is a flask tutorial</p>
+{% if data.isloggedin %}
+    <p>User is logged in</p>
+{% else %}
+   <p>User is NOT logged in</p>
+{% endif %}
+<ul>
+    {% for item in data.users %}
+        <li>{{  item }}</li>
+    {% endfor %}
+</ul>
+</body>
+</html>

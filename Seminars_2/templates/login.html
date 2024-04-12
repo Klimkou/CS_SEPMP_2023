@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+</head>
+<body>
+<h3>Login Form</h3>
+{% if current_user.is_authenticated %}
+<p>user is logged in</p>
+<p>Hi {{ current_user.name }}!</p>
+{% else %}
+<form method="post">
+    <Label>Username: </Label><input type="text" name="username"/><br>
+    <label>Password: </label><input type="password" name="password"/><br>
+    <input type="submit"/>
+</form>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Users</title>
+</head>
+<body>
+<h1>List of Countries</h1>
+<button id="button">Click me</button>
+<ul>
+    {% for country in countries %}
+    <li>{{ country[1] }} | of id {{ country[0] }}</li>
+    {% endfor %}
+</ul>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
